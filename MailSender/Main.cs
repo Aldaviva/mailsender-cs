@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace MailSender
 {
@@ -8,7 +9,9 @@ namespace MailSender
         {
             if (args.Length == 0)
             {
-                Console.WriteLine(@"usage: MailSender.exe ""Torrent name""");
+                MessageBox.Show(@"usage:
+
+MailSender.exe ""Torrent name""", "Argument Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return 1;
             }
             else
@@ -21,10 +24,12 @@ namespace MailSender
                 }
                 catch (SettingsValidationError e)
                 {
-                    Console.WriteLine("Invalid settings in file MailSender.exe.config");
-                    Console.WriteLine($"Setting name: {e.SettingName}");
-                    Console.WriteLine($"Setting value: {e.InvalidValue}");
-                    Console.WriteLine(e.Message);
+                    MessageBox.Show($@"Invalid settings in file MailSender.exe.config
+
+Setting name: {e.SettingName}
+Setting value: {e.InvalidValue}
+
+{e.Message}", "Settings Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return 1;
                 }
                 catch (Exception)
