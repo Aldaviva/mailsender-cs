@@ -1,9 +1,11 @@
 ﻿using MailKit.Security;
+using MailSender.Properties;
 using MimeKit;
+using MimeKit.Text;
 
 namespace MailSender
 {
-    class TorrentMailSender
+    public class TorrentMailSender
     {
         public TorrentMailSender()
         {
@@ -12,27 +14,27 @@ namespace MailSender
 
         public void SendEmail(string torrentName)
         {
-            Properties.Settings settings = Properties.Settings.Default;
+            Settings settings = Settings.Default;
 
-            var mailsender = new MailSender(
-                host: settings.smtpHost,
-                port: settings.smtpPort,
-                options: SecureSocketOptions.StartTls,
-                username: settings.smtpUsername,
-                password: settings.smtpPassword);
+            var mailSender = new MailSender(
+                settings.smtpHost,
+                settings.smtpPort,
+                SecureSocketOptions.StartTls,
+                settings.smtpUsername,
+                settings.smtpPassword);
 
-            mailsender.SendEmail(
-                fromName: settings.fromName,
-                fromAddress: settings.fromAddress,
-                toName: settings.toName,
-                toAddress: settings.toAddress,
-                subject: GetSubject(torrentName),
-                body: GetBody(torrentName));
+            mailSender.SendEmail(
+                settings.fromName,
+                settings.fromAddress,
+                settings.toName,
+                settings.toAddress,
+                GetSubject(torrentName),
+                GetBody(torrentName));
         }
 
-        private void ValidateProperties()
+        private static void ValidateProperties()
         {
-            Properties.Settings settings = Properties.Settings.Default;
+            Settings settings = Settings.Default;
 
             if (!HasText(settings.smtpHost))
             {
@@ -75,20 +77,20 @@ namespace MailSender
             }
         }
 
-        private bool HasText(string str)
+        private static bool HasText(string str)
         {
             return (str?.Trim().Length ?? 0) > 0;
         }
 
-        private TextPart GetBody(string torrentName)
+        private static TextPart GetBody(string torrentName)
         {
-            return new TextPart(MimeKit.Text.TextFormat.Plain)
+            return new TextPart(TextFormat.Plain)
             {
                 Text = $"Downloaded {torrentName}.\r\nEnjoy!"
             };
         }
 
-        private string GetSubject(string torrentName)
+        private static string GetSubject(string torrentName)
         {
             return $"Downloaded {torrentName}";
         }
