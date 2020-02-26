@@ -1,0 +1,10 @@
+﻿{
+	"smtpHost": "localhost",
+	"smtpPort": 25,
+	"smtpUsername": "",
+	"smtpPassword": "",
+	"fromName": "µTorrent",
+	"fromAddress": "utorrent@localhost",
+	"toName": "Recipient",
+	"toAddress": "recipient@localhost"
+}
