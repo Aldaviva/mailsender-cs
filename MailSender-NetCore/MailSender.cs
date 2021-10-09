@@ -9,29 +9,29 @@ namespace MailSender {
 
     internal class MailSender {
 
-        private readonly string host;
-        private readonly int port;
+        private readonly string              host;
+        private readonly ushort              port;
         private readonly SecureSocketOptions options;
-        private readonly string? username;
-        private readonly string? password;
+        private readonly string?             username;
+        private readonly string?             password;
 
-        public MailSender(string host, int port, SecureSocketOptions options, string? username, string? password) {
-            this.host = host;
-            this.port = port;
-            this.options = options;
+        public MailSender(string host, ushort port, SecureSocketOptions options, string? username, string? password) {
+            this.host     = host;
+            this.port     = port;
+            this.options  = options;
             this.username = username;
             this.password = password;
         }
 
         public void sendEmail(string fromName, string fromAddress, string toName, string toAddress, string subject, MimeEntity body) {
-            var message = new MimeMessage {
+            MimeMessage message = new() {
                 Subject = subject,
-                Body = body
+                Body    = body
             };
             message.From.Add(new MailboxAddress(fromName, fromAddress));
             message.To.Add(new MailboxAddress(toName, toAddress));
 
-            using var client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput(), true));
+            using ISmtpClient client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput(), true));
 
             try {
                 Console.WriteLine($"Connecting to SMTP server {host}:{port}...");

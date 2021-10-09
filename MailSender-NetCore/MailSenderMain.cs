@@ -2,11 +2,11 @@
 
 namespace MailSender {
 
-    internal static class MailSenderMain {
+    public static class MailSenderMain {
 
-        private static int Main(string[] args) {
+        public static int Main(string[] args) {
             if (args.Length == 0) {
-                MessageBox.Show(@"usage:
+                MessageBox.Show(@"Usage:
 
 MailSender.exe ""Torrent name""", "Argument Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return 1;

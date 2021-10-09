@@ -12,7 +12,8 @@
         public string toAddress { get; set; } = "recipient@localhost";
 
         public override string ToString() {
-            return $"{nameof(smtpHost)}: {smtpHost}, {nameof(smtpPort)}: {smtpPort}, {nameof(smtpUsername)}: {smtpUsername}, {nameof(smtpPassword)}: {smtpPassword}, {nameof(fromName)}: {fromName}, {nameof(fromAddress)}: {fromAddress}, {nameof(toName)}: {toName}, {nameof(toAddress)}: {toAddress}";
+            return
+                $"{nameof(smtpHost)}: {smtpHost}, {nameof(smtpPort)}: {smtpPort}, {nameof(smtpUsername)}: {smtpUsername}, {nameof(smtpPassword)}: {smtpPassword}, {nameof(fromName)}: {fromName}, {nameof(fromAddress)}: {fromAddress}, {nameof(toName)}: {toName}, {nameof(toAddress)}: {toAddress}";
         }
 
     }
