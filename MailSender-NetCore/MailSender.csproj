@@ -2,28 +2,32 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <UseWindowsForms>true</UseWindowsForms>
         <RootNamespace>MailSender</RootNamespace>
         <ApplicationIcon>envelope.ico</ApplicationIcon>
-        <StartupObject />
         <AssemblyName>MailSender</AssemblyName>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <RollForward>Major</RollForward>
         <ApplicationManifest>app.manifest</ApplicationManifest>
+        <Copyright>© 2023 Ben Hutchison</Copyright>
+        <Company>Ben Hutchison</Company>
+        <Authors>Ben Hutchison</Authors>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MailKit" Version="2.15.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+        <PackageReference Include="MailKit" Version="3.5.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="settings.example.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+        <None Update="settings.example.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
