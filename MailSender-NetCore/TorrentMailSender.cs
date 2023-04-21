@@ -7,20 +7,26 @@ namespace MailSender;
 
 public static class TorrentMailSender {
 
+    internal const string CONFIG_FILENAME = "settings.json";
+
     /// <exception cref="SettingsValidationError"></exception>
-    public static void sendEmail(string torrentName) {
-        Settings settings = new ConfigurationBuilder().AddJsonFile("settings.json").Build().Get<Settings>()!;
+    public static void sendEmail(string torrentName, string? bodyAddition) {
+        Settings settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
 
         validateSettings(settings);
 
         MailSender mailSender = new(settings.smtpHost, settings.smtpPort, SecureSocketOptions.StartTls, settings.smtpUsername, settings.smtpPassword);
 
-        mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName));
+        mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName, bodyAddition));
     }
 
-    private static TextPart getBody(string torrentName) {
+    private static TextPart getBody(string torrentName, string? bodyAddition) {
         return new TextPart(TextFormat.Plain) {
-            Text = $"Downloaded {torrentName}.\r\n\r\nEnjoy!"
+            Text = string.Join("\r\n\r\n", new[] {
+                $"Downloaded {torrentName}.",
+                bodyAddition.EmptyToNull(),
+                "Enjoy!"
+            }.Compact())
         };
     }
 

@@ -10,17 +10,20 @@
         <AssemblyName>MailSender</AssemblyName>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <RollForward>Major</RollForward>
+        <RollForward>major</RollForward>
+        <ImplicitUsings>true</ImplicitUsings>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Copyright>© 2023 Ben Hutchison</Copyright>
-        <Company>Ben Hutchison</Company>
+        <Version>1.1.0</Version>
+        <FileVersion>$(Version)</FileVersion>
         <Authors>Ben Hutchison</Authors>
+        <Copyright>© 2023 $(Authors)</Copyright>
+        <Company>$(Authors)</Company>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MailKit" Version="3.5.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
+        <PackageReference Include="MailKit" Version="4.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     </ItemGroup>
 

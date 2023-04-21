@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using MailKit;
+﻿using MailKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 
-namespace MailSender; 
+namespace MailSender;
 
 internal class MailSender {
 
