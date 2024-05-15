@@ -12,19 +12,19 @@ jobs:
 
     steps:
     - name: Clone
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Restore
-      run: dotnet restore --runtime win10-x64 --locked-mode --verbosity normal
+      run: dotnet restore --locked-mode --verbosity normal
 
     - name: Build
-      run: dotnet build MailSender-NetCore --no-restore --runtime win10-x64 --configuration Release --self-contained false --verbosity normal
+      run: dotnet build MailSender-NetCore --no-restore --runtime win-x64 --configuration Release --self-contained false
 
     - name: Publish
-      run: dotnet publish MailSender-NetCore --no-build --configuration Release -p:PublishSingleFile=true --runtime win10-x64 --self-contained false
+      run: dotnet publish MailSender-NetCore --no-build --configuration Release -p:PublishSingleFile=true --runtime win-x64 --self-contained false
       
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: MailSender
         path: .\**\bin\Release\**\publish\*.exe
