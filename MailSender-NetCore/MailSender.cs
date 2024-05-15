@@ -5,21 +5,13 @@ using MimeKit;
 
 namespace MailSender;
 
-internal class MailSender {
-
-    private readonly string              host;
-    private readonly ushort              port;
-    private readonly SecureSocketOptions options;
-    private readonly string?             username;
-    private readonly string?             password;
-
-    public MailSender(string host, ushort port, SecureSocketOptions options, string? username, string? password) {
-        this.host     = host;
-        this.port     = port;
-        this.options  = options;
-        this.username = username;
-        this.password = password;
-    }
+internal class MailSender(
+    string              host,
+    ushort              port,
+    SecureSocketOptions options,
+    string?             username,
+    string?             password
+) {
 
     public void sendEmail(string fromName, string fromAddress, string toName, string toAddress, string subject, MimeEntity body) {
         MimeMessage message = new() {

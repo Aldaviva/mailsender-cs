@@ -2,29 +2,30 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0-windows</TargetFramework>
-        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <UseWindowsForms>true</UseWindowsForms>
         <RootNamespace>MailSender</RootNamespace>
         <ApplicationIcon>envelope.ico</ApplicationIcon>
         <AssemblyName>MailSender</AssemblyName>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <RollForward>major</RollForward>
+        <RollForward>latestMajor</RollForward>
         <ImplicitUsings>true</ImplicitUsings>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Version>1.1.0</Version>
+        <Version>1.1.1</Version>
         <FileVersion>$(Version)</FileVersion>
         <Authors>Ben Hutchison</Authors>
-        <Copyright>© 2023 $(Authors)</Copyright>
+        <Copyright>© 2024 $(Authors)</Copyright>
         <Company>$(Authors)</Company>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="MailKit" Version="4.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <ItemGroup> 
+        <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.1" /> <!-- transitive dependency of MailKit, declared here to install a newer version with security fixes for CVE-2024-30172, CVE-2024-29857, and CVE-2024-30171 -->
+        <PackageReference Include="MailKit" Version="4.5.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
