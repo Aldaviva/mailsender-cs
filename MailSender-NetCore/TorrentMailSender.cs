@@ -10,25 +10,23 @@ public static class TorrentMailSender {
     internal const string CONFIG_FILENAME = "settings.json";
 
     /// <exception cref="SettingsValidationError"></exception>
-    public static void sendEmail(string torrentName, string? bodyAddition) {
+    public static async Task sendEmail(string torrentName, string? bodyAddition) {
         Settings settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
 
         validateSettings(settings);
 
         MailSender mailSender = new(settings.smtpHost, settings.smtpPort, SecureSocketOptions.StartTls, settings.smtpUsername, settings.smtpPassword);
 
-        mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName, bodyAddition));
+        await mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName, bodyAddition));
     }
 
-    private static TextPart getBody(string torrentName, string? bodyAddition) {
-        return new TextPart(TextFormat.Plain) {
-            Text = string.Join("\r\n\r\n", new[] {
-                $"Downloaded {torrentName}.",
-                bodyAddition.EmptyToNull(),
-                "Enjoy!"
-            }.Compact())
-        };
-    }
+    private static TextPart getBody(string torrentName, string? bodyAddition) => new(TextFormat.Plain) {
+        Text = string.Join("\r\n\r\n", new[] {
+            $"Downloaded {torrentName}.",
+            bodyAddition.EmptyToNull(),
+            "Enjoy!"
+        }.Compact())
+    };
 
     private static string getSubject(string torrentName) {
         return $"Downloaded {torrentName}";

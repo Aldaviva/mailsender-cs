@@ -13,7 +13,7 @@ internal class MailSender(
     string?             password
 ) {
 
-    public void sendEmail(string fromName, string fromAddress, string toName, string toAddress, string subject, MimeEntity body) {
+    public async Task sendEmail(string fromName, string fromAddress, string toName, string toAddress, string subject, MimeEntity body) {
         MimeMessage message = new() {
             Subject = subject,
             Body    = body
@@ -25,7 +25,7 @@ internal class MailSender(
 
         try {
             Console.WriteLine($"Connecting to SMTP server {host}:{port}...");
-            client.Connect(host, port, options);
+            await client.ConnectAsync(host, port, options);
         } catch (Exception e) {
             showError("Failed to connect to SMTP server", e);
             throw;
@@ -34,7 +34,7 @@ internal class MailSender(
         if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password)) {
             try {
                 Console.WriteLine($"Logging in as {username}...");
-                client.Authenticate(new SaslMechanismLogin(username, password));
+                await client.AuthenticateAsync(new SaslMechanismLogin(username, password));
             } catch (Exception e) {
                 showError("Failed to log in to SMTP server", e);
                 throw;
@@ -43,14 +43,14 @@ internal class MailSender(
 
         try {
             Console.WriteLine("Sending message...");
-            client.Send(message);
+            await client.SendAsync(message);
         } catch (Exception e) {
             showError("Failed to send message", e);
             throw;
         }
 
         Console.WriteLine("Sent.\nDisconnecting...");
-        client.Disconnect(true);
+        await client.DisconnectAsync(true);
         Console.WriteLine("Disconnected.");
     }
 
