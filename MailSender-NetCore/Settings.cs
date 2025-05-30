@@ -1,4 +1,4 @@
-﻿namespace MailSender; 
+namespace MailSender; 
 
 public class Settings {
 

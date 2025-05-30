@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -13,25 +13,25 @@
         <RollForward>latestMajor</RollForward>
         <ImplicitUsings>true</ImplicitUsings>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Version>1.1.2</Version>
+        <Version>1.2.0</Version>
         <FileVersion>$(Version)</FileVersion>
         <Authors>Ben Hutchison</Authors>
-        <Copyright>© 2024 $(Authors)</Copyright>
+        <Copyright>© 2025 $(Authors)</Copyright>
         <Company>$(Authors)</Company>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <DebugType>embedded</DebugType>
+        <SelfContained>false</SelfContained>
     </PropertyGroup>
 
-    <ItemGroup> 
-        <PackageReference Include="BouncyCastle.Cryptography" Version="2.3.1" /> <!-- transitive dependency of MailKit, declared here to install a newer version with security fixes for CVE-2024-30172, CVE-2024-29857, and CVE-2024-30171 -->
-        <PackageReference Include="MailKit" Version="4.5.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <ItemGroup>
+        <PackageReference Include="MailKit" Version="4.12.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+        <PackageReference Include="Unfucked" Version="0.0.1-beta.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="settings.example.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
+        <None Update="settings.example.json" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>

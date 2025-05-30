@@ -1,31 +1,34 @@
-﻿using MailKit.Security;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
+using Unfucked;
 
 namespace MailSender;
 
-public static class TorrentMailSender {
+public class TorrentMailSender: IDisposable {
 
     internal const string CONFIG_FILENAME = "settings.json";
 
-    /// <exception cref="SettingsValidationError"></exception>
-    public static async Task sendEmail(string torrentName, string? bodyAddition) {
-        Settings settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
+    private readonly MailSender mailSender;
+    private readonly Settings   settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
 
+    public TorrentMailSender() {
         validateSettings(settings);
+        mailSender = new MailSender(settings.smtpHost, settings.smtpPort, SecureSocketOptions.StartTls, settings.smtpUsername, settings.smtpPassword);
+    }
 
-        MailSender mailSender = new(settings.smtpHost, settings.smtpPort, SecureSocketOptions.StartTls, settings.smtpUsername, settings.smtpPassword);
-
+    /// <exception cref="SettingsValidationError"></exception>
+    public async Task sendEmail(string torrentName, string? bodyAddition) {
         await mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName, bodyAddition));
     }
 
     private static TextPart getBody(string torrentName, string? bodyAddition) => new(TextFormat.Plain) {
-        Text = string.Join("\r\n\r\n", new[] {
+        Text = ((string?[]) [
             $"Downloaded {torrentName}.",
             bodyAddition.EmptyToNull(),
             "Enjoy!"
-        }.Compact())
+        ]).Compact().Join("\r\n\r\n")
     };
 
     private static string getSubject(string torrentName) {
@@ -65,6 +68,11 @@ public static class TorrentMailSender {
         if (string.IsNullOrWhiteSpace(settings.toAddress) || !settings.toAddress.Contains('@')) {
             throw new SettingsValidationError("toAddress", settings.toAddress, "toAddress must be the email address that will appear in the To: field of the email, such as ben@server.com");
         }
+    }
+
+    public void Dispose() {
+        mailSender.Dispose();
+        GC.SuppressFinalize(this);
     }
 
 }

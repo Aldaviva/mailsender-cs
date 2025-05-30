@@ -1,4 +1,4 @@
-﻿namespace MailSender;
+namespace MailSender;
 
 [Serializable]
 public class SettingsValidationError: Exception {

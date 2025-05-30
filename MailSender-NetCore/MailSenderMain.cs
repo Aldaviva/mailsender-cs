@@ -1,4 +1,5 @@
-﻿using MailSender;
+using MailSender;
+using MailSender.Exceptions;
 
 if (args.Length == 0) {
     string processName = Path.GetFileName(Environment.ProcessPath ?? "MailSender.exe");
@@ -13,8 +14,20 @@ if (args.Length == 0) {
 try {
     string  torrentName  = args[0];
     string? bodyAddition = args.ElementAtOrDefault(1);
-    await TorrentMailSender.sendEmail(torrentName, bodyAddition);
-    return 0;
+
+    using TorrentMailSender torrentMailSender = new();
+
+    while (true) {
+        try {
+            await torrentMailSender.sendEmail(torrentName, bodyAddition);
+            return 0;
+        } catch (MailException e) {
+            DialogResult dialogResult = MessageBox.Show(e.Message, "Error while sending email", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            if (dialogResult != DialogResult.Retry) {
+                return 1;
+            }
+        }
+    }
 } catch (SettingsValidationError e) {
     MessageBox.Show($"""
                      Invalid settings in file {Path.GetFullPath(TorrentMailSender.CONFIG_FILENAME)}

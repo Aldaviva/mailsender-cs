@@ -1,61 +1,56 @@
-﻿using MailKit;
+using MailKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using MailSender.Exceptions;
 using MimeKit;
+using Unfucked;
+using AuthenticationException = MailSender.Exceptions.AuthenticationException;
 
 namespace MailSender;
 
-internal class MailSender(
-    string              host,
-    ushort              port,
-    SecureSocketOptions options,
-    string?             username,
-    string?             password
-) {
+internal class MailSender(string host, ushort port, SecureSocketOptions options, string? username, string? password): IDisposable {
+
+    private readonly ISmtpClient smtpClient = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput(), true));
 
     public async Task sendEmail(string fromName, string fromAddress, string toName, string toAddress, string subject, MimeEntity body) {
         MimeMessage message = new() {
             Subject = subject,
-            Body    = body
+            Body    = body,
+            From    = { new MailboxAddress(fromName, fromAddress) },
+            To      = { new MailboxAddress(toName, toAddress) }
         };
-        message.From.Add(new MailboxAddress(fromName, fromAddress));
-        message.To.Add(new MailboxAddress(toName, toAddress));
-
-        using ISmtpClient client = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput(), true));
 
         try {
             Console.WriteLine($"Connecting to SMTP server {host}:{port}...");
-            await client.ConnectAsync(host, port, options);
+            await smtpClient.ConnectAsync(host, port, options);
         } catch (Exception e) {
-            showError("Failed to connect to SMTP server", e);
-            throw;
+            throw new ConnectionException($"Failed to connect to SMTP server {host}:{port}", e);
         }
 
-        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password)) {
+        if (username.HasText() && password.HasText()) {
             try {
                 Console.WriteLine($"Logging in as {username}...");
-                await client.AuthenticateAsync(new SaslMechanismLogin(username, password));
+                await smtpClient.AuthenticateAsync(new SaslMechanismLogin(username, password));
             } catch (Exception e) {
-                showError("Failed to log in to SMTP server", e);
-                throw;
+                throw new AuthenticationException($"Failed to log in to SMTP server {host}:{port} as {username}", e);
             }
         }
 
         try {
             Console.WriteLine("Sending message...");
-            await client.SendAsync(message);
+            await smtpClient.SendAsync(message);
         } catch (Exception e) {
-            showError("Failed to send message", e);
-            throw;
+            throw new SendingException($"Failed to send message \"{subject}\" to {toAddress}", e);
         }
 
         Console.WriteLine("Sent.\nDisconnecting...");
-        await client.DisconnectAsync(true);
+        await smtpClient.DisconnectAsync(true);
         Console.WriteLine("Disconnected.");
     }
 
-    private static void showError(string message, Exception e) {
-        MessageBox.Show($"{e.GetType().Name}: {e.Message}", message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+    public void Dispose() {
+        smtpClient.Dispose();
+        GC.SuppressFinalize(this);
     }
 
 }
