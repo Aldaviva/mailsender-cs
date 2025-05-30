@@ -27,5 +27,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MailSender
-        path: .\**\bin\Release\**\publish\*.exe
+        path: MailSender-NetCore\bin\Release\net8.0-windows\win-x64\publish\*.exe
         if-no-files-found: error
