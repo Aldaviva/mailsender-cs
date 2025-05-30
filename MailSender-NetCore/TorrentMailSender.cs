@@ -1,4 +1,5 @@
 using MailKit.Security;
+using MailSender.Exceptions;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
