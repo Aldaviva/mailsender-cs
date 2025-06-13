@@ -1,6 +1,10 @@
 namespace MailSender.Exceptions;
 
-public abstract class MailException(string message, Exception? cause): ApplicationException(message, cause);
+public abstract class MailException(string message, Exception? cause): ApplicationException(message, cause) {
+
+    public string? subject { get; set; }
+
+}
 
 public class ConnectionException(string message, Exception cause): MailException(message, cause);
 

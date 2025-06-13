@@ -3,6 +3,7 @@ using MailSender.Exceptions;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
+using ThrottleDebounce;
 using Unfucked;
 
 namespace MailSender;
@@ -21,7 +22,14 @@ public class TorrentMailSender: IDisposable {
 
     /// <exception cref="SettingsValidationError"></exception>
     public async Task sendEmail(string torrentName, string? bodyAddition) {
-        await mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, getSubject(torrentName), getBody(torrentName, bodyAddition));
+        string subject = getSubject(torrentName);
+        try {
+            await Retrier.Attempt(async _ => await mailSender.sendEmail(settings.fromName, settings.fromAddress, settings.toName, settings.toAddress, subject, getBody(torrentName, bodyAddition)),
+                new Retrier.Options { MaxAttempts = 16, Delay = Retrier.Delays.Linear(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5)) });
+        } catch (MailException e) {
+            e.subject = subject;
+            throw;
+        }
     }
 
     private static TextPart getBody(string torrentName, string? bodyAddition) => new(TextFormat.Plain) {

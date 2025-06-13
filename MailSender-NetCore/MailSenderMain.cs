@@ -22,7 +22,8 @@ try {
             await torrentMailSender.sendEmail(torrentName, bodyAddition);
             return 0;
         } catch (MailException e) {
-            DialogResult dialogResult = MessageBox.Show(e.Message, "Error while sending email", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            DialogResult dialogResult = MessageBox.Show($"Subject: {e.subject}\nError: {e.GetType().Name}: {e.Message}", "Error while sending email", MessageBoxButtons.RetryCancel,
+                MessageBoxIcon.Error);
             if (dialogResult != DialogResult.Retry) {
                 return 1;
             }
