@@ -6,5 +6,6 @@
 	"fromName": "µTorrent",
 	"fromAddress": "utorrent@localhost",
 	"toName": "Recipient",
-	"toAddress": "recipient@localhost"
+	"toAddress": "recipient@localhost",
+	"transcoderFarmApiBase": "https://localhost:8726/"
 }
