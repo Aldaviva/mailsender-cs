@@ -28,22 +28,22 @@ if (app.OptionHelp!.HasValue()) {
 }
 if (exit) return 1;
 
-using HttpClient        http        = new UnfuckedHttpClient(new HttpClientHandler { UseDefaultCredentials = true });
-using qBittorrentClient qBittorrent = new qBittorrentHttpClient(new qBittorrentHttpApiClient { httpClient  = http });
+using HttpClient            http        = new UnfuckedHttpClient(new HttpClientHandler { UseDefaultCredentials = true });
+using qBittorrentHttpClient qBittorrent = new(new qBittorrentHttpApiClient { httpClient                        = http });
 
-IReadOnlySet<string> videoFileExtensions = new HashSet<string>
-    { ".avi", ".mov", ".mpg", ".mp4", ".wmv", ".flv", ".mkv", ".mpeg", ".asf", ".m4v", ".webm", ".ts", ".mp4v", ".3gpp", ".bik", ".divx", ".dv", ".f4v", ".m1v", ".vob" }.ToFrozenSet();
+var videoFileExtensions = FrozenSet.Create(".avi", ".mov", ".mpg", ".mp4", ".wmv", ".flv", ".mkv", ".mpeg", ".asf", ".m4v", ".webm", ".ts", ".mp4v", ".3gpp", ".bik", ".divx", ".dv",
+    ".f4v", ".m1v", ".vob");
 
 try {
     Settings settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
     settings.validate();
     using TorrentMailSender torrentMailSender = new(settings);
 
-    if (settings.transcoderFarmApiBase != null && (tags.Value()?.Split(',').Contains("Transcode", StringComparer.CurrentCultureIgnoreCase) ?? false) && infoHash.Value() is { } torrentId) {
+    if (settings.transcoderFarmApiBase != null && (tags.Value()?.Split(',').Contains("Transcode", StringComparer.CurrentCultureIgnoreCase) ?? false) && infoHash.Value() is {} torrentId) {
         TranscoderFarmPoster poster = new(http, settings.transcoderFarmApiBase);
 
         TorrentInfo              torrent        = (await qBittorrent.getTorrent(torrentId))!;
-        IEnumerable<TorrentFile> filesInTorrent = (await qBittorrent.listFilesInTorrent(torrentId)).ToList();
+        IEnumerable<TorrentFile> filesInTorrent = (await qBittorrent.listFilesInTorrent(torrent)).ToList();
         if (filesInTorrent.Count() > 1) {
             IEnumerable<string> downloadedVideoFiles = filesInTorrent.Where(file =>
                     file is { progress: 1, priority: not TorrentFile.FilePriority.DO_NOT_DOWNLOAD } &&
@@ -72,13 +72,13 @@ try {
     }
 } catch (SettingsValidationError e) {
     MessageBox.Show($"""
-                     Invalid settings in file {Path.GetFullPath(CONFIG_FILENAME)}
+        Invalid settings in file {Path.GetFullPath(CONFIG_FILENAME)}
 
-                     Setting name: {e.settingName}
-                     Setting value: {e.invalidValue}
+        Setting name: {e.settingName}
+        Setting value: {e.invalidValue}
 
-                     {e.Message}
-                     """, "Settings Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+        {e.Message}
+        """, "Settings Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
     return 1;
 } catch (Exception e) when (e is not OutOfMemoryException) {
     MessageBox.Show($"{e.Message}\r\n\r\n{e.StackTrace}", "Unhandled exception while sending email", MessageBoxButtons.OK, MessageBoxIcon.Error);

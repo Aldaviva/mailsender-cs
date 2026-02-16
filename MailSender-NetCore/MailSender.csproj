@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <UseWindowsForms>true</UseWindowsForms>
         <RootNamespace>MailSender</RootNamespace>
@@ -13,10 +13,10 @@
         <RollForward>latestMajor</RollForward>
         <ImplicitUsings>true</ImplicitUsings>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Version>1.4.0</Version>
+        <Version>1.3.0</Version>
         <FileVersion>$(Version)</FileVersion>
         <Authors>Ben Hutchison</Authors>
-        <Copyright>© 2025 $(Authors)</Copyright>
+        <Copyright>© 2026 $(Authors)</Copyright>
         <Company>$(Authors)</Company>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <DebugType>embedded</DebugType>
@@ -24,24 +24,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MailKit" Version="4.13.0" />
-        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.1.1" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8" />
-        <PackageReference Include="qBittorrentApiClient" Version="0.0.0-beta.1" />
+        <PackageReference Include="MailKit" Version="4.15.0" />
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+        <PackageReference Include="qBittorrentApiClient" Version="0.0.2" />
         <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta5" />
-        <PackageReference Include="Unfucked" Version="0.0.1-beta.12" />
-        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.11" />
+        <PackageReference Include="Unfucked" Version="0.0.1-beta.31" />
+        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.22" />
     </ItemGroup>
 
     <ItemGroup>
         <Reference Include="TranscoderFarm.Common">
-            <HintPath>..\..\MpegTransportStreamRemuxer\TranscoderFarm.Common\bin\Release\net8.0\TranscoderFarm.Common.dll</HintPath>
+            <HintPath>..\..\MpegTransportStreamRemuxer\TranscoderFarm.Common\bin\Release\net10.0\TranscoderFarm.Common.dll</HintPath>
         </Reference>
     </ItemGroup>
 
     <ItemGroup>
         <None Update="settings.example.json" CopyToOutputDirectory="PreserveNewest" />
+        <None Include="..\Readme.md;..\.github*\**" />
     </ItemGroup>
+
+    <Import Project="providedDependencies.g.props" />
 
 </Project>
