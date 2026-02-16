@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/MailSender-NetCore"
+    schedule:
+      interval: "weekly"
