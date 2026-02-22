@@ -31,7 +31,7 @@
         <PackageReference Include="qBittorrentApiClient" Version="0.0.2" />
         <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta5" />
         <PackageReference Include="Unfucked" Version="0.0.1-beta.31" />
-        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.22" />
+        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.23" />
     </ItemGroup>
 
     <ItemGroup>
