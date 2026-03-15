@@ -27,7 +27,7 @@
         <PackageReference Include="MailKit" Version="4.15.1" />
         <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.0.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.5" />
         <PackageReference Include="qBittorrentApiClient" Version="0.0.2" />
         <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta5" />
         <PackageReference Include="Unfucked" Version="0.0.1-beta.31" />
