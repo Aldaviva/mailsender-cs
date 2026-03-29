@@ -58,9 +58,9 @@
       },
       "Unfucked": {
         "type": "Direct",
-        "requested": "[0.0.1-beta.31, )",
-        "resolved": "0.0.1-beta.31",
-        "contentHash": "9+AWHhH2Bv6ZE8DY2Mt09tvX8nJfqolrGV/J+5x5zDOHqqX7iudNjiLnC6wguUnv26w5WL6HM+JU2jR7oABazw=="
+        "requested": "[0.0.1-beta.35, )",
+        "resolved": "0.0.1-beta.35",
+        "contentHash": "nCHnvOKfQxgL+b1ljO6haFK0+7+h9a3T/KXWISnY6RY9r0/E7mUea5WKfPW+ucPea8Y+ZW3TVpUm2WuGEEyBQQ=="
       },
       "Unfucked.HTTP": {
         "type": "Direct",
