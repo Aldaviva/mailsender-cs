@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Restore
-      run: dotnet restore --locked-mode
+      run: dotnet restore --locked-mode --runtime win-x64
 
     - name: Build
       run: dotnet build MailSender-NetCore --no-restore --runtime win-x64 --configuration Release --self-contained false
