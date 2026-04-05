@@ -29,7 +29,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
         <PackageReference Include="qBittorrentApiClient" Version="0.0.2" />
-        <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta5" />
+        <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta6" />
         <PackageReference Include="Unfucked" Version="0.0.1-beta.34" />
         <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.26" />
     </ItemGroup>
