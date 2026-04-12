@@ -58,17 +58,17 @@
       },
       "Unfucked": {
         "type": "Direct",
-        "requested": "[0.0.1-beta.34, )",
-        "resolved": "0.0.1-beta.34",
-        "contentHash": "arwav9Lt8kbWJxEQXcgQE6ntX0XYxbmcVapVH5mEKbEgBkxR9TwWODgbbR4q7aVNmqdvI8YKQZLGsBvipk8PJw=="
+        "requested": "[0.0.1-beta.38, )",
+        "resolved": "0.0.1-beta.38",
+        "contentHash": "kubqp2LfAyeKSwsLbq+qXPssbGNUzjVICfDqbPf9LgO50a/TM8KfQnxBxkZo8YoUksII0avp1NJAZoosChGk9w=="
       },
       "Unfucked.HTTP": {
         "type": "Direct",
-        "requested": "[0.0.1-beta.26, )",
-        "resolved": "0.0.1-beta.26",
-        "contentHash": "sdZ54Th9siSOHtclVZEu1n/JCzv1Gwa/js5HsCwH2COfymhPco0Bu4SJS1xfp3GUOvScEF4n9xt0wSPwPMxJJA==",
+        "requested": "[0.0.1-beta.29, )",
+        "resolved": "0.0.1-beta.29",
+        "contentHash": "PAxAlZesoDFwjgORomT2iDcJZKihFfIJisYz+cEjWXYXNBuy+YdbIqvo9720LJ2OCkKUBQzxXfh6EfffifKQRg==",
         "dependencies": {
-          "Unfucked": "0.0.1-beta.34"
+          "Unfucked": "0.0.1-beta.38"
         }
       },
       "BouncyCastle.Cryptography": {
