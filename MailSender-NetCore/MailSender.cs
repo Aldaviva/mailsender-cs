@@ -3,12 +3,11 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MailSender.Exceptions;
 using MimeKit;
-using Unfucked;
 using AuthenticationException = MailSender.Exceptions.AuthenticationException;
 
 namespace MailSender;
 
-internal class MailSender(string host, ushort port, SecureSocketOptions options, string? username, string? password): IDisposable {
+internal sealed class MailSender(string host, ushort port, SecureSocketOptions options, string? username, string? password): IDisposable {
 
     private readonly ISmtpClient smtpClient = new SmtpClient(new ProtocolLogger(Console.OpenStandardOutput(), true));
 
@@ -27,7 +26,7 @@ internal class MailSender(string host, ushort port, SecureSocketOptions options,
             throw new ConnectionException($"Failed to connect to SMTP server {host}:{port}", e);
         }
 
-        if (username.HasText() && password.HasText()) {
+        if (username.HasText && password.HasText) {
             try {
                 Console.WriteLine($"Logging in as {username}...");
                 await smtpClient.AuthenticateAsync(new SaslMechanismLogin(username, password));
@@ -50,7 +49,6 @@ internal class MailSender(string host, ushort port, SecureSocketOptions options,
 
     public void Dispose() {
         smtpClient.Dispose();
-        GC.SuppressFinalize(this);
     }
 
 }

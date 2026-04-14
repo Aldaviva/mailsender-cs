@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -13,7 +13,7 @@
         <RollForward>latestMajor</RollForward>
         <ImplicitUsings>true</ImplicitUsings>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <Version>1.3.0</Version>
+        <Version>1.3.1</Version>
         <FileVersion>$(Version)</FileVersion>
         <Authors>Ben Hutchison</Authors>
         <Copyright>© 2026 $(Authors)</Copyright>
@@ -25,13 +25,12 @@
 
     <ItemGroup>
         <PackageReference Include="MailKit" Version="4.15.1" />
-        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
-        <PackageReference Include="qBittorrentApiClient" Version="0.0.2" />
-        <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta5" />
-        <PackageReference Include="Unfucked" Version="0.0.1-beta.34" />
-        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.26" />
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.5" />
+        <PackageReference Include="qBittorrentApiClient" Version="0.0.4" />
+        <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta6" />
+        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.29" />
     </ItemGroup>
 
     <ItemGroup>

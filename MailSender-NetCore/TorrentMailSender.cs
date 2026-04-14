@@ -3,11 +3,10 @@ using MailSender.Exceptions;
 using MimeKit;
 using MimeKit.Text;
 using ThrottleDebounce.Retry;
-using Unfucked;
 
 namespace MailSender;
 
-public class TorrentMailSender(Settings settings): IDisposable {
+public sealed class TorrentMailSender(Settings settings): IDisposable {
 
     private readonly MailSender mailSender = new(settings.smtpHost, settings.smtpPort, SecureSocketOptions.StartTls, settings.smtpUsername, settings.smtpPassword);
 
@@ -24,20 +23,19 @@ public class TorrentMailSender(Settings settings): IDisposable {
     }
 
     private static TextPart getBody(string torrentName, string? bodyAddition) => new(TextFormat.Plain) {
-        Text = ((string?[]) [
-            $"Downloaded {torrentName}.",
-            bodyAddition.EmptyToNull() ?? "No tags",
-            "Enjoy!"
-        ]).Compact().Join("\r\n\r\n")
+        Text = $"""
+            Downloaded {torrentName}.
+
+            {bodyAddition.EmptyToNull ?? "No tags"}
+
+            Enjoy!
+            """
     };
 
-    private static string getSubject(string torrentName) {
-        return $"Downloaded {torrentName}";
-    }
+    private static string getSubject(string torrentName) =>
+        $"Downloaded {torrentName}";
 
-    public void Dispose() {
+    public void Dispose() =>
         mailSender.Dispose();
-        GC.SuppressFinalize(this);
-    }
 
 }

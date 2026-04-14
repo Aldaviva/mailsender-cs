@@ -1,4 +1,4 @@
-name: .NET
+﻿name: .NET
 
 on:
   push:
@@ -12,19 +12,19 @@ jobs:
 
     steps:
     - name: Clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Restore
-      run: dotnet restore --locked-mode --runtime win-x64
+      run: dotnet restore --runtime win-x64 --locked-mode
 
     - name: Build
       run: dotnet build MailSender-NetCore --no-restore --runtime win-x64 --configuration Release --self-contained false
 
     - name: Publish
-      run: dotnet publish MailSender-NetCore --no-build --configuration Release -p:PublishSingleFile=true --runtime win-x64 --self-contained false
+      run: dotnet publish MailSender-NetCore --no-build --runtime win-x64 --configuration Release --self-contained false -p:PublishSingleFile=true
       
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: MailSender
         path: MailSender-NetCore\bin\Release\net10.0-windows\win-x64\publish\*.exe

@@ -2,7 +2,7 @@ using MailSender.Exceptions;
 
 namespace MailSender;
 
-public class Settings {
+public sealed class Settings {
 
     public string smtpHost { get; set; } = "localhost";
     public ushort smtpPort { get; set; } = 25;
