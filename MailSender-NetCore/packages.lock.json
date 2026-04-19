@@ -42,11 +42,11 @@
       },
       "qBittorrentApiClient": {
         "type": "Direct",
-        "requested": "[0.0.4, )",
-        "resolved": "0.0.4",
-        "contentHash": "qPjuZz4W8Nhlqu2Weg37k+j1cKYRKb9M0gCmThT1oJy71VB1BT4xOkKJkw28QQ3f7oqZUbzsRwcn+qDjcZAPRQ==",
+        "requested": "[0.0.5, )",
+        "resolved": "0.0.5",
+        "contentHash": "VdcxW1PjLfG+/QjE581jHdS/1cQplpiJpyUS9hN2XRDScyX5KMMNeU0/voD/s8kVFCs3/LH03gQMoV+b0QjyIw==",
         "dependencies": {
-          "Unfucked.HTTP": "0.0.1-beta.29"
+          "Unfucked.HTTP": "0.0.1-beta.30"
         }
       },
       "ThrottleDebounce": {
@@ -60,11 +60,11 @@
       },
       "Unfucked.HTTP": {
         "type": "Direct",
-        "requested": "[0.0.1-beta.29, )",
-        "resolved": "0.0.1-beta.29",
-        "contentHash": "PAxAlZesoDFwjgORomT2iDcJZKihFfIJisYz+cEjWXYXNBuy+YdbIqvo9720LJ2OCkKUBQzxXfh6EfffifKQRg==",
+        "requested": "[0.0.1-beta.30, )",
+        "resolved": "0.0.1-beta.30",
+        "contentHash": "fxy4YbkQuKMopnRaPdwMT3y2jDzz0okL/Ia+4yXbNKChDn2rLxS0Fe8rIIjDGBNLlfOW/zWcc9v0t7bxf3jHTw==",
         "dependencies": {
-          "Unfucked": "0.0.1-beta.38"
+          "Unfucked": "0.0.1-beta.40"
         }
       },
       "BouncyCastle.Cryptography": {
@@ -155,8 +155,8 @@
       },
       "Unfucked": {
         "type": "Transitive",
-        "resolved": "0.0.1-beta.38",
-        "contentHash": "kubqp2LfAyeKSwsLbq+qXPssbGNUzjVICfDqbPf9LgO50a/TM8KfQnxBxkZo8YoUksII0avp1NJAZoosChGk9w=="
+        "resolved": "0.0.1-beta.40",
+        "contentHash": "9V3WIbszgP5JPkbeoy3N5kA3WRqnXLXNV0Zi4X/LO0gW/uCrTar7714juleFVaE2KWPtrS5Me245PprN86Vy/A=="
       }
     },
     "net10.0-windows7.0/win-x64": {

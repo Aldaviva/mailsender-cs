@@ -28,9 +28,9 @@
         <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.1.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.5" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.5" />
-        <PackageReference Include="qBittorrentApiClient" Version="0.0.4" />
+        <PackageReference Include="qBittorrentApiClient" Version="0.0.5" />
         <PackageReference Include="ThrottleDebounce" Version="3.0.0-beta6" />
-        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.29" />
+        <PackageReference Include="Unfucked.HTTP" Version="0.0.1-beta.30" />
     </ItemGroup>
 
     <ItemGroup>
