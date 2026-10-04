@@ -30,6 +30,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
         <PackageReference Include="qBittorrentApiClient" Version="0.0.5" />
         <PackageReference Include="ThrottleDebounce" Version="3.0.0" />
+        <PackageReference Include="Unfucked" Version="0.0.1-beta.52" />
     </ItemGroup>
 
     <ItemGroup>

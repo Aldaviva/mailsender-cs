@@ -4,14 +4,16 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using qBittorrent.Client;
 using qBittorrent.Client.Data;
-using System.Collections.Frozen;
+using System.Buffers;
 using Unfucked.HTTP;
 
 const string CONFIG_FILENAME = "settings.json";
 
+Version.PrintProgramVersionAndExitIfRequested();
+
 CommandLineApplication app = new();
+app.VersionOption("-v|--version", (string?) null);
 app.Conventions.UseDefaultConventions();
-app.VersionOptionFromAssemblyAttributes(typeof(Program).Assembly);
 app.Description      = "Send email after a torrent finishes downloading.";
 app.ExtendedHelpText = $"\nExample: {app.Name} --name \"Torrent name\" --info-hash \"e403e61e6c8cdd2ed8333145d500e048d4d60107\" --tags \"Tag1,Tag2,Tag3\"";
 
@@ -19,20 +21,27 @@ CommandOption<string> torrentName = app.Option<string>("-n|--name", "Name of the
 CommandOption<string> infoHash    = app.Option<string>("-i|--info-hash", "Torrent ID (Info Hash v1 or v2, %K in qBittorrent, optional)", CommandOptionType.SingleValue);
 CommandOption<string> tags        = app.Option<string>("-t|--tags", "Comma-delimited list of torrent tags (%G in qBittorrent, optional)", CommandOptionType.SingleValue);
 
-bool exit = true;
-app.OnExecute(() => exit = false);
-app.OnValidationError(result => MessageBox.Show(result.ErrorMessage, $"{app.Name} error", MessageBoxButtons.OK, MessageBoxIcon.Error));
-app.Execute(args);
-if (app.OptionHelp!.HasValue()) {
-    MessageBox.Show(app.GetHelpText(), $"{app.Name} help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+bool hasError = true;
+app.OnExecute(() => hasError = false);
+// app.OnValidationError(result => MessageBox.Show(result.ErrorMessage, $"{app.Name} error", MessageBoxButtons.OK, MessageBoxIcon.Error));
+
+await using TextWriter errorWriter = app.Error = new MessageBoxWriter($"{app.Name} error", MessageBoxIcon.Error);
+await using TextWriter textWriter  = app.Out = new MessageBoxWriter(app.Name!, MessageBoxIcon.Information);
+
+try {
+    app.Execute(args);
+} catch (UnrecognizedCommandParsingException) {
+    return 1; // already showed message box
 }
-if (exit) return 1;
+if (hasError) return 1;
 
 using HttpClient        http        = new UnfuckedHttpClient(new HttpClientHandler { UseDefaultCredentials = true });
 using qBittorrentClient qBittorrent = new qBittorrentApiClient(new qBittorrentHttpTransport { httpClient   = http });
 
-FrozenSet<string> videoFileExtensions = FrozenSet.Create(".avi", ".mov", ".mpg", ".mp4", ".wmv", ".flv", ".mkv", ".mpeg", ".asf", ".m4v", ".webm", ".ts", ".mp4v", ".3gpp", ".bik", ".divx", ".dv",
-    ".f4v", ".m1v", ".vob");
+SearchValues<string> videoFileExtensions = SearchValues.Create([
+    ".avi", ".mov", ".mpg", ".mp4", ".wmv", ".flv", ".mkv", ".mpeg", ".asf", ".m4v", ".webm", ".ts", ".mp4v", ".3gpp", ".bik", ".divx", ".dv",
+    ".f4v", ".m1v", ".vob"
+], false);
 
 try {
     Settings settings = new ConfigurationBuilder().AddJsonFile(CONFIG_FILENAME).Build().Get<Settings>()!;
@@ -48,7 +57,7 @@ try {
         if (filesInTorrent.Count > 1) {
             IEnumerable<string> downloadedVideoFiles = from downloadedFile in filesInTorrent
                 where downloadedFile is { progress: 1, priority: not TorrentFile.FilePriority.DO_NOT_DOWNLOAD }
-                where videoFileExtensions.Contains(Path.GetExtension(downloadedFile.filePathRelativeToSavePath).ToLowerInvariant())
+                where videoFileExtensions.Contains(Path.GetExtension(downloadedFile.filePathRelativeToSavePath))
                 select downloadedFile.filePathAbsolute;
 
             foreach (string downloadedVideoFile in downloadedVideoFiles) {
