@@ -41,11 +41,11 @@
       },
       "qBittorrentApiClient": {
         "type": "Direct",
-        "requested": "[0.0.5, )",
-        "resolved": "0.0.5",
-        "contentHash": "VdcxW1PjLfG+/QjE581jHdS/1cQplpiJpyUS9hN2XRDScyX5KMMNeU0/voD/s8kVFCs3/LH03gQMoV+b0QjyIw==",
+        "requested": "[0.0.7, )",
+        "resolved": "0.0.7",
+        "contentHash": "UP1t71N4GmG6z/SZKEYBWJnL/vLBwQQk065QaI3ULbXBst2sj2eyxJiDjcx16AnRqwJlSMPYBZk6hS/w7WBhEw==",
         "dependencies": {
-          "Unfucked.HTTP": "0.0.1-beta.30"
+          "Unfucked.HTTP": "0.0.1-beta.36"
         }
       },
       "ThrottleDebounce": {
@@ -132,10 +132,10 @@
       },
       "Unfucked.HTTP": {
         "type": "Transitive",
-        "resolved": "0.0.1-beta.30",
-        "contentHash": "fxy4YbkQuKMopnRaPdwMT3y2jDzz0okL/Ia+4yXbNKChDn2rLxS0Fe8rIIjDGBNLlfOW/zWcc9v0t7bxf3jHTw==",
+        "resolved": "0.0.1-beta.36",
+        "contentHash": "UD8rnkle/fRJAmbzJeYMnoFxQiOU88MKYSv8E64BTCW3GANNyo2Xe6HKuqvqmTHJsZ5jPNSI+9J8+EO8mZq3cQ==",
         "dependencies": {
-          "Unfucked": "0.0.1-beta.40"
+          "Unfucked": "0.0.1-beta.57"
         }
       }
     },
